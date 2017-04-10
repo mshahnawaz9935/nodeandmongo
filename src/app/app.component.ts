@@ -14,7 +14,7 @@ export class AppComponent {
   text = '';
   constructor(private http:Http){
     console.log('how is it going');
-    this.http.get('http://localhost:3000/getdata')
+    this.http.get('http://localhost:3000/api/getdata')
             .map((res: Response) => res.json()).subscribe((dataFromServer) => {
       // Now you can use the data
       this.data = dataFromServer;
