@@ -1,0 +1,8 @@
+<p>
+  search works!
+</p>
+<md-card fxLayout="row" fxLayoutAlign="center center" class="dash-card">
+    <md-input-container>
+        <input mdInput class="dash-text center" value="{{value}}" #box (keyup.enter)="onEnter(box.value)">
+    </md-input-container>
+</md-card>
