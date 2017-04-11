@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var request=require('request');
 var MongoClient = require('mongodb').MongoClient , format = require('util').format;
 
 /* GET api listing. */
@@ -32,6 +33,30 @@ MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
     });
 });
 
+
+});
+
+router.get('/search', (req, res) => {
+
+// var text = [{ id : 'dublintechsummit'  ,facebook : 'dublintechsummit' , twitter : 'DubTechSummit', tags : 'DublinTechSummit'  } ,
+//  { id: 'microsoft' ,facebook : 'MicrosoftUK' , twitter : 'Microsoft', tags : 'Microsoft' }, // tags stand for twitter_hash tags
+//     { id: 'linkedin' ,facebook : 'Linkedin' , twitter : 'Linkedin', tags : 'Linkedin' },
+//     { id:'cnn' ,facebook : 'cnn' , twitter: 'CNN', tags : 'CNN' } ];
+ //var query = text[0];  //Default is set to DublinTechSummit
+
+  var id = req.query.id;
+//   var flag = 0;
+//   for(var i=0; i < text.length;i++)
+//   {
+//   if(id == text[i].id )
+//   flag = i;
+//   }
+//   query = text[flag];
+  console.log('id is ' + id);
+
+    request.get('http://kdeg-vm-43.scss.tcd.ie:7080/ALMANAC_Personalised_Composition_Service/composer/search2?query='+ id,function(err,response,body){
+    res.send(response);
+    });
 
 });
 
