@@ -1,21 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule,Response, Headers, RequestOptions } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { SearchComponent } from './search/search.component';
-
+import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    MaterialModule.forRoot()
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
