@@ -54,7 +54,7 @@ router.get('/search', (req, res) => {
 //   query = text[flag];
   console.log('id is ' + id);
 
-    request.get('http://kdeg-vm-43.scss.tcd.ie:7080/ALMANAC_Personalised_Composition_Service/composer/search2?query='+ id,function(err,response,body){
+    request.get('http://kdeg-vm-43.scss.tcd.ie/ALMANAC_Personalised_Composition_Service/composer/search2?query='+ id,function(err,response,body){
     res.send(response);
     });
 

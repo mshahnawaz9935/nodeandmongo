@@ -1,0 +1,105 @@
+   <div class="row">
+            <div class="col-md-6">
+
+                <!--Card--><div class="md-form">
+    <input type="text" id="form1" class="form-control">
+    <label for="form1" class="">Enter what you want to search</label>
+</div>
+                <div class="card">
+                    <!--Card image-->
+                    <div class="view overlay hm-white-slight">
+                        <a>
+                            <div class="mask"></div>
+                        </a>
+                    </div>
+                    <!--/.Card image-->
+
+                    <!--Card content-->
+                    <div class="card-block">
+                        <!--Title-->
+                        <h4 class="card-title">Perform a Search</h4>
+                        <!--Text-->
+                        <p class="card-text">
+   We provide information about everything.</p>
+                        <a class="btn btn-primary red">Search</a>
+                    </div>
+                    <!--/.Card content-->
+
+                </div>
+                <div class="card testimonial-card" >
+
+              <!--Bacground color-->
+              <div class="card-up default-color-dark">
+              </div>
+
+              <!--Avatar-->
+              <div class="avatar"><img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%288%29.jpg" class="rounded-circle img-responsive">
+              </div>
+
+              <div class="card-block">
+                  <!--Name-->
+                  <h4 class="card-title">Mohammad Shahnawaz</h4>
+                  <hr>
+                  <!--Quotation-->
+                  <p><i class="fa fa-quote-left"></i> 
+                  Software Engineer in Dublin Ireland <i class="fa fa-quote-right"></i> </p>
+              </div>
+
+          </div>
+            <div class="card testimonial-card" >
+
+              <!--Bacground color-->
+              <div class="card-up default-color-dark">
+              </div>
+
+              <!--Avatar-->
+              <div class="avatar"><img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%288%29.jpg" class="rounded-circle img-responsive">
+              </div>
+
+              <div class="card-block">
+                  <!--Name-->
+                  <h4 class="card-title">Mohammad Shahnawaz</h4>
+                  <hr>
+                  <!--Quotation-->
+                  <p><i class="fa fa-quote-left"></i> 
+                  Software Engineer in Dublin Ireland <i class="fa fa-quote-right"></i> </p>
+              </div>
+
+          </div>
+                <!--/.Card-->
+                <!--Card-->
+
+            </div>
+            </div> <!--<button md-button *ngIf="!authenticated" (click)="note()">Authenticate to One Note</button>
+         <button md-button *ngIf="authenticated" (click)="logout()">Logged in / Click To Log Out</button>
+<md-card fxLayout="row" fxLayoutAlign="center center" class="dash-card" style="text-align:center"><h3>Enter keyword : </h3>
+<md-input-container>
+        <input mdInput class="dash-text center" value="{{value}}" #box (keyup.enter)="onEnter(box.value)">
+    </md-input-container></md-card>
+<div style="padding-top:3%;padding-left:10%;padding-right:10%;"></div>
+    <md-grid-list cols="3" rowHeight="2:2.5">
+  <md-grid-tile  *ngFor= "let result of results">
+<md-card  class="example-card" (click)="onSelect(result)" >
+     <md-card-header>
+    <div md-card-avatar class="example-header-image"></div>
+    <md-card-title>{{result.name}}</md-card-title>
+    <md-card-subtitle>{{result.query}}</md-card-subtitle>
+  </md-card-header>
+        <img md-card-image [src]="result.image"> 
+        <md-card-content>
+    <p>
+    {{result.description}} 
+    </p>
+      <section class="example-section">
+      <label class="example-margin">Progress:</label>
+      <md-slider class="example-margin" ></md-slider>
+      <md-progress-bar mode="indeterminate"></md-progress-bar>
+    </section>
+  </md-card-content>
+          
+           <md-card-actions>
+    <button md-button>LIKE</button>
+    <button md-button>SHARE</button>
+  </md-card-actions>
+</md-card>
+  </md-grid-tile></md-grid-list>-->
