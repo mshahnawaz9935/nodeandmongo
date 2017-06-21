@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var authHelper = require('../authHelper.js');
-var api = require('./api.js');
  var https = require ('https');
  var request = require('request');
 
@@ -9,37 +8,6 @@ var api = require('./api.js');
 var t=2,sec=2;
 var notebookid;
 var sectionid;
-
-
-function getToken (callback)
-{
-    var token = '';
-    var favourites ={};
-
-   var qs = require("querystring");
-   var request = require('request');
-
-    var url = '';
-    var queryObject =  qs.stringify({ grant_type: 'client_credentials',
-    client_id: '150b9f0f-ab92-4565-a38e-4f28f3deb136',
-    client_secret: 'Q1a09Fx13lEcU/RwM8AsVsBolhP/QRvGNJGqzLupivM=',
-    resource: '150b9f0f-ab92-4565-a38e-4f28f3deb136' });
-    var favourites = {};    
-    request({
-        url: "https://login.microsoftonline.com/3105192b-76b3-4f26-816e-9b7e773ac262/oauth2/token",
-        method: "POST",
-        body: queryObject,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",  // <--Very important!!!
-        },
-        }, function (error, response){
-            // console.log (JSON.parse(response.body).access_token);   
-             token =  JSON.parse(response.body).access_token;    
-             callback(token);
-        });
-}
-
-
 
 router.get('/', function (req, res) {
   // check for token
@@ -132,8 +100,6 @@ router.get('/checknote2', function (req, res) {
 });
 
 router.get('/checknote3', function (req, res) {
-
-  console.log('check token' , req.cookies.ACCESS_TOKEN_CACHE_KEY);
   
   checknote2(req.cookies.ACCESS_TOKEN_CACHE_KEY , function(t , notebookid)
   {
@@ -144,7 +110,7 @@ router.get('/checknote3', function (req, res) {
     {
      
        if(sec == 1){
-         createarticle(req.cookies.ACCESS_TOKEN_CACHE_KEY, req.session.topic, req.session.chapter , req.session.articleid , req.session.studentid , req.session.moduleid);
+         createarticle(req.cookies.ACCESS_TOKEN_CACHE_KEY, req.session.topic, req.session.chapter);
        res.json('Notebook exists id is ' + notebookid + 'Section exists id is' + sectionid);
        }
        else if(sec==0)
@@ -166,7 +132,7 @@ router.get('/checknote3', function (req, res) {
          console.log('notebook id' ,notebookid);
       createsection(req.cookies.ACCESS_TOKEN_CACHE_KEY, notebookid ,req.session.modulename, function(sectionid)
          {
-           createarticle(req.cookies.ACCESS_TOKEN_CACHE_KEY, req.session.topic, req.session.chapter , req.session.articleid , req.session.studentid , req.session.moduleid);
+           createarticle(req.cookies.ACCESS_TOKEN_CACHE_KEY, req.session.topic, req.session.chapter);
             res.json('Notebook' + notebookid + 'and section created' + sectionid);
          });
          });
@@ -584,24 +550,21 @@ function writespecific(token,topic,chapter ,callback)
 
 function writespecific2(token,topic,chapter, articleid ,studentid, moduleid,callback)
 {
-    getToken(function(token2){
-    console.log('inside token' , topic,chapter , token, articleid ,studentid, moduleid);
+   
+    console.log('inside token' , topic,chapter);
     var url = '';
     var favourites = {};
-    var headers = {
-        "content-type": "application/json",
-        Authorization: 'Bearer ' + token2 
-    }
-    var options = {
+    request({
          url:'http://services.almanac-learning.com/personalised-composition-service/composer/students/' + studentid + '/instances/'+ moduleid +'/articles/' + articleid + '/',
         method: 'GET',
-        headers: headers,
-    }
-    console.log(options.url);
-    request(options, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          favourites = JSON.parse(response.body);
-            console.log('response article' , response.body , favourites.sections);
+        json: true,   // <--Very important!!!
+        headers: {
+            "content-type": "application/json",  // <--Very important!!!
+            "Authorization" : "Bearer " + token
+        },
+        }, function (error, response, body){
+            favourites = response.body;
+            console.log('response article' , response.body);
             if(favourites.sections != undefined)
             {
             console.log(favourites.sections.length);
@@ -617,30 +580,21 @@ function writespecific2(token,topic,chapter, articleid ,studentid, moduleid,call
                     finally { }
                     for(var j=0; j< image_len;j++)
                     {
-                      console.log('Image url is ',favourites.sections[i].images[j].url);
                     url = url+ "<p><img src=" + "\"" + favourites.sections[i].images[j].url + "\"" + "/><br>"+
                     favourites.sections[i].images[j].caption +  "</p><p>" + favourites.sections[i].images[j].attribution
                     + "</p>" ;
                     }
                 }
                }
-               else
-               {
+               else{
                   favourites= { title: 'Page does not exists: Error 404' };
                   url = url + "<p> Contact your School or Teacher</p>";
                   console.log('I come here when i get error' , favourites.title);
                }
-                
-        }
-        else {
-                  favourites= { title: 'Page does not exists: Error 404' };
-                  url = url + "<p> Contact your School or Teacher</p>";
-                  console.log('Error occured getting data' , error ,response.body,response.statusCode, response.headers);
-               }
-               callback(url);
-    });
-
+                callback(url);
+            
         });
+        
        
      
     }
@@ -648,7 +602,6 @@ function writespecific2(token,topic,chapter, articleid ,studentid, moduleid,call
 
     function createarticle(token, topic, chapter ,articleid , studentid , moduleid)
     {
-      
       writespecific2(token, topic, chapter ,articleid , studentid, moduleid,function(url)
       {
         var htmlPayload =
@@ -663,7 +616,6 @@ function writespecific2(token,topic,chapter, articleid ,studentid, moduleid,call
          url +
         "</body>" +
         "</html>";   
-        console.log('Payload is' , htmlPayload);
             
             createNewPage(token, htmlPayload, false); 
 
@@ -975,4 +927,4 @@ function renderError(res, e) {
   });
 }
 
-module.exports = router ;
+module.exports = router;
