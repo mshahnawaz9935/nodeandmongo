@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class MeanAppPage {
+export class CarinsurescannerPage {
   navigateTo() {
     return browser.get('/');
   }

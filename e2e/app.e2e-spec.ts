@@ -1,10 +1,10 @@
-import { MeanAppPage } from './app.po';
+import { CarinsurescannerPage } from './app.po';
 
-describe('mean-app App', function() {
-  let page: MeanAppPage;
+describe('carinsurescanner App', function() {
+  let page: CarinsurescannerPage;
 
   beforeEach(() => {
-    page = new MeanAppPage();
+    page = new CarinsurescannerPage();
   });
 
   it('should display message saying app works', () => {
