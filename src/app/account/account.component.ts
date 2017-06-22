@@ -17,7 +17,7 @@ import 'rxjs/add/operator/map';
   onenote() 
   {
        console.log('Authenticated');
-       window.open('http://localhost:3000/onenote','_self' );
+       window.open('https://nodemongo.azurewebsites.net/onenote','_self' );
     }
     create()
     {
